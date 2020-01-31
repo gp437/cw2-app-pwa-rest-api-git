@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>School activities</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Volkhov&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div>
+    <img src="images/logo.png" alt="" srcset="" width="240pt ">
+  </div> <br>
+  <!-- activities div app -->
+  <div Class="grid-container">
+    <div id="app2" class="app2">
+      <div v-if="pupilactivity" style="display: inline-block;">
+        <p v-if="activitylists.length">
+          <br>
+          <ul>
+            <li v-for="activitylist in activitylists" class="space">{{ activitylist }}
+              <select v-model="topic">
+                <option disabled value="">Review</option>
+                <option>1 star</option>
+                <option>2 stars</option>
+                <option>3 stars</option>
+                <option>4 stars</option>
+                <option>5 stars</option>
+              </select>
+            </li>
+          </ul>
+        </p>
+        <br><button class="space1" @click="logoutfunction">Log Out</button>
+      </div>
+
+      <!-- start of service provider -->
+      <div v-if="showevents" style="display: inline-block;">
+        <p v-if="activitylists.length">
+          <br>
+          <ul>
+            <li v-for="activitylist in activitylists" class="space">{{ activitylist }}
+              <select v-model="topic" style="font-size:20px">
+                <option disabled value="">Review</option>
+                <option>1 star</option>
+                <option>2 stars</option>
+                <option>3 stars</option>
+                <option>4 stars</option>
+                <option>5 stars</option>
+              </select>
+            </li>
+
+          </ul>
+        </p>
+      </div>
+      <div v-if="eventaddhide">
+        <!-- activity name -->
+
+        <span>Description: {{ activity_name }}</span>
+        <input v-model="activity_name" placeholder="Enter description"> <br>
+
+
+        <span> Topic: {{ topic }}</span>
+        <select v-model="topic">
+          <option disabled value="">Please select one</option>
+          <option>Maths</option>
+          <option>IT</option>
+          <option>English</option>
+          <option>Sports</option>
+          <option>Music</option>
+          <option>Dance</option>
+          <option>other...</option>
+        </select>
+
+
+        <!-- price -->
+        <br>
+        <p>Price: £ {{ price }}</p>
+        <input v-model="price" placeholder="Enter price" type="number">
+
+        <!-- location -->
+        <p>Location: {{ location }}</p>
+        <input v-model="location" placeholder="Enter location"> <br>
+        <br> <span>Time: {{ time }}</span>
+        <select v-model="time">
+          <option disabled value="">Please select</option>
+          <option>09:00 - 10:00</option>
+          <option>10:00 - 11:00</option>
+          <option>11:00 - 12:00</option>
+          <option>12:00 - 13:00</option>
+          <option>13:00 - 14:00</option>
+          <option>14:00 - 15:00</option>
+          <option>15:00 - 16:00</option>
+          <option>16:00 - 17:00</option>
+          <option>17:00 - 18:00</option>
+          <option>18:00 - 19:00</option>
+          <option>19:00 - 20:00</option>
+        </select> <br>
+
+        <br><button class="space1" @click="save_activity">SAVE</button>
+        <p>Please refresh page to see the activity added.</p>
+        <button v-if=false>UPDATE</button>
+        <button v-if=false>REMOVE</button>
+        <br><button class="space1" @click="logoutfunction">Log Out</button>
+      </div>
+
+
+
+    </div> <!-- app2 div ends -->
+  </div><!-- activities div app -->
+
+
+
+
+  <form class="text1 grid-container" id="app" @submit="checkForm" method="post">
+
+    <!-- END LOGO -->
+
+
+    <div style="display: flex; justify-content: flex-end; padding: 5px; " v-if="isHidden" v-if="!login_hide">
+      <img src="images/login.jpg" alt="" srcset="" style="width:100px;height:40px;" v-on:click="isHidden = !isHidden">
+    </div> <br> <!-- div for login BUTTON-->
+    <div v-if="logout_show">
+      <button @click="logout" v-show="logout">LOG OUT</button>
+    </div>
+
+    <div class="text1" v-if="!isHidden"> <br>
+      <span>{{userType_id}}</span>
+      <span>{{ login_id }}</span> <br>
+      <p v-if="login_done">
+        <label for="email">Email</label>
+        <input id="email" v-model="email" type="email" name="email"> <br>
+        <label for="password">Password</label>
+        <input id="password" v-model="password" type="password" name="password" min="4"> <BR>
+        <button @click="checkLogin">LOG IN</button>
+        <br>
+        <a href="/index.html" class="btn btn-default">Home</a>
+      </p>
+
+    </div> <br> <!-- lOGIN FIELDS DIV END -->
+
+    <div style="display: flex; justify-content: flex-end; padding: 5px; " v-if="!login_hide"
+      v-on:click="login_hide = true">
+      <img src="images/register.png" alt="" srcset="" style="width:100px;height:40px;" v-if="isHidden"> </div>
+    <!--rEGISTER BUTTON-->
+
+    
+    <!-- Register form STARTS-->
+    <p v-if="errors.length">
+      <br>
+      <ul>
+        <li v-for="error in errors">{{ error }}</li>
+      </ul>
+    </p>
+    <div id="myDiv" v-if="login_hide">
+      <p>
+        <label for="user_type">User Type</label>
+        <select id="user_type" v-model="user_type" name="user_type">
+          <option>Pupil</option>
+          <option>Parent</option>
+          <option>Service Provider</option>
+        </select>
+      </p>
+      <p>
+        <label for="email">Email</label>
+        <input id="email" v-model="email" type="email" name="email">
+      </p>
+      <p>
+        <label for="name">Name</label>
+        <input id="name" v-model="name" type="text" name="name">
+      </p>
+      <p>
+        <label for="age">Age</label>
+        <input id="age" v-model="age" type="number" name="age" min="0">
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input id="password" v-model="password" type="password" name="password" min="4">
+      </p>
+      <p class="text1">
+        <input type="submit" value="REGISTER">
+      </p>
+      <button @click="logoutfunction" v-if="logout_show"> LOGOUT </button>
+    </div>
+    <!-- here the register form ends -->
+    </div>
+  </form>
+
+
+  <script>
+
+    const email_key = 'email';
+    const name_key = 'name';
+    const age_key = 'age';
+    const password_key = 'password';
+    const user_type_key = 'user_type';
+    const app = new Vue({
+      el: '#app',
+      data: {
+        errors: [],
+        name: null,
+        age: null,
+        user_type: null,
+        password: null,
+        email: null,
+        isHidden: true,
+        login_hide: false,
+        login_id: "Login",
+        userType_id: "",
+        login_done: true,
+        logout_show: false,
+
+
+
+
+      },
+      methods: {
+        checkForm: function (e) {
+          app2.logout_show = true;
+          logout_show = true;
+          this.errors = [];
+          if (!this.email) {
+            this.errors.push('Email required.');
+            return e.preventDefault();
+          }
+
+          if (!this.name) {
+            this.errors.push('Name required.');
+            return e.preventDefault();
+          }
+
+          if (!this.age) {
+            this.errors.push('Age required.');
+            return e.preventDefault();
+          }
+          if (this.email == JSON.parse(localStorage.getItem(email_key))) {
+            this.errors.push('Email used before.');
+            return e.preventDefault();
+            e.preventDefault();
+
+          }
+          if (this.password <= 4) {
+            this.errors.push('Password too short.');
+            return e.preventDefault();
+          }
+
+          if (this.email != JSON.parse(localStorage.getItem(email_key))) {
+            localStorage.setItem(email_key, JSON.stringify(this.email));
+            localStorage.setItem(name_key, JSON.stringify(this.name));
+            localStorage.setItem(age_key, JSON.stringify(this.age));
+            localStorage.setItem(password_key, JSON.stringify(this.password));
+            localStorage.setItem(user_type_key, JSON.stringify(this.user_type));
+            var elem = document.getElementById("myDiv");
+            elem.parentNode.removeChild(elem);
+          }
+          return e.preventDefault();
+
+
+          e.preventDefault();
+
+        },
+        checkLogin(e) {
+          if (this.email == JSON.parse(localStorage.getItem(email_key))) {
+            if (this.password == JSON.parse(localStorage.getItem(password_key))) {
+              this.login_id = JSON.parse(localStorage.getItem(email_key));
+              this.userType_id = JSON.parse(localStorage.getItem(user_type_key));
+              logout_show = true;
+              e.preventDefault();
+            }
+          }
+
+          if (this.userType_id == "Service Provider") {
+            // eventaddhide = true; show the add events div
+            app2.eventaddhide = true;
+            app2.showevents = true;
+            app2.logout_show = true;
+            console.log("user type id is equal to service provider")
+          }
+          if (this.userType_id == "Parent") {
+            // eventaddhide = true; show the add events div
+            app2.pupilactivity = true;
+            app2.logout_show = true;
+            console.log("user type id is equal to pupil")
+
+          }
+          if (this.userType_id == "Pupil") {
+            // eventaddhide = true; show the add events div
+            app2.pupilactivity = true;
+            app2.logout_show = true;
+            console.log("user type id is equal to pupil")
+          }
+          if (this.password != JSON.parse(localStorage.getItem(password_key))) {
+            this.userType_id = "Wrong password."
+          }
+
+        },
+        logout() {
+          app2.eventaddhide = false;
+          app2.showevents = false;
+
+        },
+        logoutfunction() {
+          location.reload();
+          app.$forceUpdate();
+        }
+
+      }
+    })
+  </script>
+
+  <!-- add activities app -->
+  <script>
+
+    const topic_key = 'topic';
+    const price_key = 'price';
+    const location_key = 'location';
+    const time_key = 'time';
+    const activity_name_key = 'activity_name';
+    const Serviceprovider = user_type_key;
+    const activity_key = 'activity_name';
+
+
+    var app2 = new Vue({
+      el: '#app2',
+
+      data: {
+        topic: '',
+        price: '',
+        location: '',
+        time: '',
+        activityID: 0,
+        activity: [],
+        pupilactivity: false,
+
+        eventaddhide: false,
+        showevents: false,
+        activitylists: [],
+        activity_name: '',
+        activityshow: '',
+        activitieslist: ' ',
+
+      },
+
+      //   // if (localStorage.userType_id == "Service Provider") {}
+      created() {
+
+        this.activitylists = JSON.parse(localStorage.getItem(activity_key) || '[]');
+
+      },
+
+      methods: {
+        save_activity() {
+          this.activity.push({ name: this.activity_name, topic: this.topic, price: this.price, location: this.location, time: this.time });
+          localStorage.setItem(activity_key, JSON.stringify(this.activity));
+          this.activitieslists = JSON.parse(localStorage.getItem(activity_key));
+
+
+
+        },
+        logoutfunction() {
+          location.reload();
+          app.$forceUpdate();
+        }
+
+
+
+      }
+
+    });
+  </script>
+
+</body>
+
+</html>

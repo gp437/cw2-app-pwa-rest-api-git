@@ -58,7 +58,6 @@
       </div>
       <div v-if="eventaddhide">
         <!-- activity name -->
-
         <span>Description: {{ activity_name }}</span>
         <input v-model="activity_name" placeholder="Enter description"> <br>
 
@@ -263,10 +262,11 @@
 
         },
         checkLogin(e) {
-          if (this.email == JSON.parse(localStorage.getItem(email_key))) {
-            if (this.password == JSON.parse(localStorage.getItem(password_key))) {
-              this.login_id = JSON.parse(localStorage.getItem(email_key));
-              this.userType_id = JSON.parse(localStorage.getItem(user_type_key));
+          if (this.email == user.email) {
+            if (this.password == user.password) {
+              this.login_id = "logged in";
+               //userType_id is Service Provider or Pupil
+              this.userType_id = user.userType;
               logout_show = true;
               e.preventDefault();
             }

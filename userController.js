@@ -12,12 +12,12 @@ exports.index = function (req, res) {
         }
         res.json({
             status: "success",
-            message: "users retrieved successfully",
+            message: "data retrieved successfully",
             data: users
         });
     });
 };
-// Handle create contact actions
+// Handle create user actions
 exports.new = function (req, res) {
     var user = new User();
     user.name = req.body.name ? req.body.name : user.name;

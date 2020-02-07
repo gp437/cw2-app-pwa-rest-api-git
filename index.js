@@ -7,6 +7,11 @@ let mongoose = require('mongoose');
 // Initialise the app
 let app = express();
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // Import routes
 let apiRoutes = require("./api-routes");
 // Configure bodyparser to handle post requests
@@ -28,7 +33,7 @@ else
 var port = process.env.PORT || 8080;
 
 // Send message for default URL
-app.get('/', (req, res) => res.send('Hello World with Express'));
+app.get('/', (req, res) => res.send('Hello cw2'));
 
 // Use Api routes in the App
 app.use('/api', apiRoutes);
@@ -36,6 +41,10 @@ app.use('/api', apiRoutes);
 app.listen(port, function () {
     console.log("Running RestHub on port " + port);
 });
+
+app.get('/',function(req,res) {
+    res.sendFile('index.html');
+  });
 
 
 

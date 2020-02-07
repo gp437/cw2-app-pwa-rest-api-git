@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>cw2</title>
+</head>
+
+<body>
+  <style>
+    .images {
+      width: 150pt;
+      height: auto;
+    }
+  </style>
+
+  <!-- access courses database using fetch -->
+  <div class="main-content">
+    <div id="app">
+      <div style="display: flex; position: relative; justify-content: space-between; overflow:auto;">
+        <div v-for="course in allCourses" style="width: 200pt; border: 2px solid rgb(0, 0, 0)">
+
+          <ul>
+            <li>ID: {{course._id}} </li>
+
+            <li>Topic: {{course.topic}} </li>
+
+            <li>Title: {{course.title}} </li>
+
+            <li>Location: {{course.location}} </li>
+
+            <li>Price: {{course.price}} </li>
+            <li>Provider: {{course.provider}} </li>
+
+
+            <!-- <button v-on:click="delete">Delete</button> -->
+            <!-- <li>Date: {{course.create_date}}</li> -->
+            <li>
+              <img class="images" v-if="course.topic === 'english'" v-bind:src="image">
+              <img class="images" v-if="course.topic === 'maths'" v-bind:src="image2">
+              <img class="images" v-if="course.topic === 'dance'" v-bind:src="image3">
+              <img class="images" v-if="course.topic === 'music'" v-bind:src="image4">
+              <img class="images" v-if="course.topic === 'art'" v-bind:src="image5">
+              <img class="images" v-if="course.topic === 'crafting'" v-bind:src="image6">
+              <img class="images" v-if="course.topic === 'sport'" v-bind:src="image7">
+              <img class="images" v-if="course.topic === 'cooking'" v-bind:src="image8">
+              <img class="images" v-if="course.topic === 'computing'" v-bind:src="image9">
+              <img class="images" v-if="course.topic === 'science'" v-bind:src="image10">
+              <img class="images" v-if="course.topic === 'other'" v-bind:src="image11">
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of app div\/ -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+
+  <!-- register form -->
+  <h3>Register</h3>
+  <form class="form" id="myForm" enctype="multipart/form-data">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name">
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <label for="userType">User Type</label>
+    <input type="text" name="userType" id="userType">
+    <label for="gender">gender</label>
+    <input type="text" name="gender" id="gender">
+    <label for="phone">phone</label>
+    <input type="text" name="phone" id="phone">
+    <button type="submit">Register</button>
+  </form>
+  <!-- end of register form -->
+  <br>
+
+
+  <script>
+    // start of register functions
+    const myForm = document.getElementById('myForm');
+    myForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const searchParams = new URLSearchParams();
+      for (const pair of formData) {
+        searchParams.append(pair[0], pair[1]);
+      }
+      fetch('http://localhost:8080/api/User', {
+        method: 'post', //  'PUT'
+        body: searchParams
+      }).then(function (response) {
+        return response.text();
+      }).then(function (text) {
+        console.log(text);
+      }).catch(function (error) {
+        console.error(error)
+      })
+    });
+// end of register functions
+  </script>
+
+  <!-- new course form -->
+  <form class="form" id="myForm2" enctype="multipart/form-data">
+    <h3>Add new activity/course</h3>
+    <label for="title">title</label>
+    <input type="text" name="title" id="title">
+    <label for="topic">topic</label>
+    <input type="text" name="topic" id="topic">
+    <label for="price">price</label>
+    <input type="text" name="price" id="price">
+    <label for="location">location</label>
+    <input type="location" name="location" id="location">
+    <button type="submit" value="activity">Add activity</button>
+  </form>
+  <!-- end of new course form -->
+  <script>
+    // start of new course functions
+    let myForm2 = document.getElementById('myForm2');
+    myForm2.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData2 = new FormData(this);
+
+      const searchParams2 = new URLSearchParams();
+      for (const pair of formData2) {
+        searchParams2.append(pair[0], pair[1]);
+      }
+      fetch('http://localhost:8080/api/course', {
+        method: 'post', //  'PUT'
+        body: searchParams2
+      }).then(function (response) {
+        return response.text();
+      }).then(function (text) {
+        console.log(text);
+      }).catch(function (error) {
+        console.error(error)
+      })
+    });
+  // end of new course
+  </script>
+
+
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          allCourses: [],
+          image: "images/english.jpg",
+          image2: "images/maths3.jfif",
+          image3: "images/dance.jpg",
+          image4: "images/music.jpg",
+          image5: "images/activity2.jfif",
+          image6: "images/activity1.jpeg",
+          image7: "images/activity3.png",
+          image8: "images/cooking.jpg",
+          image9: "images/computing.jpg",
+          image10: "images/science.jpg",
+          image11: "images/other.jfif",
+
+        }
+      },
+      mounted() {
+        fetch('http://localhost:8080/api/course')
+          .then(response => response.json())
+          .then(data => {
+            this.allCourses = data.data;
+            console.log(data);
+          });
+      }
+      // end of get courses
+    })
+
+  </script>
+
+
+
+
+
+  <!-- show login div user details -->
+  <div id="app2">
+    <input type="text" name="Myemail" id="Myemail" value ="">
+    <button v-on:click="logCheck">Login iiiiii</button>
+    
+    <h4>My info</h4>
+    <div style="display: flex; position: relative; justify-content: space-between; overflow:auto;">
+      <div v-for="users in allUsers" style="width: 200pt; border: 2px solid rgb(0, 0, 0)">
+        <ul>
+          <li>ID: {{users._id}} </li>
+          <li>password: {{users.password}} </li>
+          <li>user type: {{users.userType}} </li>
+          <li>email: {{users.email}} </li>
+          <li>name: {{users.name}} </li>
+          <li>phone: {{users.phone}} </li>
+          <li>gender: {{users.gender}} </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const email2 =  document.getElementById("Myemail").innerHTML ;
+
+    // login vue get email api
+    let vm2 = new Vue({
+      el: '#app2',
+
+      data() {
+        return {
+          allUsers: []
+        }
+      },
+      methods: {
+        logCheck : function () {
+          fetch("http://localhost:8080/api/User/email/" + email2)
+            .then(response => response.json())
+            .then(data => {
+              this.allUsers = data.data;
+              console.log(data);
+              console.log(("http://localhost:8080/api/User/email/" + email2))
+              console.log(email2)
+
+             });
+            console.log("http://localhost:8080/api/User/email/" + email2)
+          
+
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

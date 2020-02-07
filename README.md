@@ -1,1 +1,3 @@
-# cw2-app-pwa-rest-api-git
+# cw1-web-app
+app for coursework 2
+rest api and pwa

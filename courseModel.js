@@ -4,27 +4,27 @@ var mongoose = require('mongoose');
 var courseSchema = mongoose.Schema({
     title: {
         type: String,
-        required: true
+        // required: true
     },
     topic: {
         type: String,
-        required: true
+        // required: true
     },
     price: {
         type : String,
-        required: true
+        // required: true
     },
     location: {
         type: String,
-        required: true
+        // required: true
     },
     provider: {
         type: String,
-        required: true
+        // required: true
     },
     ranking: {
         type: String,
-        required: false
+         required: false
 
     },
     rankingAuthor: {

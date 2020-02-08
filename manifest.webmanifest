@@ -1,0 +1,22 @@
+{
+    "name": "afterschool activities and classes",
+    "short_name": "afterschool",
+    "description": "cw2 pwa  - afterschool activities",
+    "icons": [
+      {
+        "src": "/favicon.ico",
+        "type": "image/ico",
+        "sizes": "480x480"
+      },
+      {
+        "src": "/images/icons-512.png",
+        "type": "image/png",
+        "sizes": "500x500"
+      }
+    ],
+    "start_url": "http://127.0.0.1:5500/cw2.html",
+    "background_color": "#3367D6",
+    "display": "standalone",
+    "scope": "/cw2.html",
+    "theme_color": "#3367D6"
+  }

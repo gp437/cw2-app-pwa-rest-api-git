@@ -13,7 +13,7 @@ var version = 'v1::';
    then the service worker won't be installed either.
 */
 var offlineFundamentals = [
-   '/',
+   '/cw2-app-pwa-rest-api/',
    '/cw2-app-pwa-rest-api/index.js',
   '/cw2-app-pwa-rest-api/styles.css',
   '/cw2-app-pwa-rest-api/userModel.js',

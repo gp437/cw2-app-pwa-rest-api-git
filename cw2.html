@@ -17,7 +17,8 @@
 <script>
   if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/cw2-app-pwa-rest-api-git/sw.js').then(function(registration) {
+    navigator.serviceWorker.register('sw.js', { scope: '/' }).then(function(registration) {
+      // ('sw.js', { scope: '/' }).then(function(reg) {
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }, function(err) {

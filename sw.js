@@ -24,7 +24,7 @@ var offlineFundamentals = [
   '/cw2-app-pwa-rest-api/reviewController.js',
   '/cw2-app-pwa-rest-api/package.json',
   '/cw2-app-pwa-rest-api/manifest.webmanifest',
-  '/cw2-app-pwa-rest-api/favicon.ico',
+  // '/cw2-app-pwa-rest-api/favicon.ico',
   '/cw2-app-pwa-rest-api/courseModel.js',
   '/cw2-app-pwa-rest-api/courseController.js',
   '/cw2-app-pwa-rest-api/routes/api-routes.js',
@@ -242,21 +242,3 @@ self.addEventListener("activate", function(event) {
 
 
 
-
-
-// self.importScripts('data/games.js');
-
-
-// self.addEventListener('install', function(e) {
-//  e.waitUntil(
-//    caches.open('airhorner').then(function(cache) {
-//      return cache.addAll([
-//        '/',
-//        '/cw2-app-pwa-rest-api-git/cw2.html',
-//       '/cw2.html?homescreen=1',
-//        '/?homescreen=1',
-
-//      ]);
-//    })
-//  );
-// });

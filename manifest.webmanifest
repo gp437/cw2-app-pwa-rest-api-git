@@ -14,7 +14,7 @@
         "sizes": "500x500"
       }
     ],
-    "start_url": "http://127.0.0.1:5500/cw2.html",
+    "start_url": "/cw2.html",
     "background_color": "#3367D6",
     "display": "standalone",
     "scope": "/cw2.html",

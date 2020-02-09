@@ -14,7 +14,7 @@
         "sizes": "500x500"
       }
     ],
-    "start_url": "/cw2-app-pwa-rest-api-git/cw2.html",
+    "start_url": "/cw2-app-pwa-rest-api-git/sw.js",
     "background_color": "#3367D6",
     "display": "standalone",
     "theme_color": "#3367D6"

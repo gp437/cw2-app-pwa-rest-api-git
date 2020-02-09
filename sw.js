@@ -14,7 +14,7 @@ var version = 'v1::';
 */
 var offlineFundamentals = [
   '/',
-  // '/cw2-app-pwa-rest-api/index.js',
+  '/cw2-app-pwa-rest-api/index.js',
   '/cw2-app-pwa-rest-api/cw2.html',
   '/cw2-app-pwa-rest-api/styles.css',
   '/cw2-app-pwa-rest-api/userModel.js',
@@ -24,7 +24,7 @@ var offlineFundamentals = [
   '/cw2-app-pwa-rest-api/reviewController.js',
   '/cw2-app-pwa-rest-api/package.json',
   '/cw2-app-pwa-rest-api/manifest.webmanifest',
-  // '/cw2-app-pwa-rest-api/favicon.ico',
+  '/cw2-app-pwa-rest-api/favicon.ico',
   '/cw2-app-pwa-rest-api/courseModel.js',
   '/cw2-app-pwa-rest-api/courseController.js',
   '/cw2-app-pwa-rest-api/routes/api-routes.js',

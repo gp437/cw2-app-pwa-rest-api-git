@@ -39,7 +39,7 @@ var offlineFundamentals = [
   '/cw2-app-pwa-rest-api/images/favicon.ico',
   '/cw2-app-pwa-rest-api/images/icon.png',
   '/cw2-app-pwa-rest-api/images/icon256.png',
-  '/cw2-app-pwa-rest-api/images/icons-512.png',
+  '/cw2-app-pwa-rest-api/images/icons512.png',
   '/cw2-app-pwa-rest-api/images/login.png',
   '/cw2-app-pwa-rest-api/images/logo.png',
   '/cw2-app-pwa-rest-api/images/maths3.jfif',

@@ -9,7 +9,7 @@
         "sizes": "480x480"
       },
       {
-        "src": "/images/icons512.png",
+        "src": "/cw2-app-pwa-rest-api-git/images/icons512.png",
         "type": "image/png",
         "sizes": "500x500"
       }

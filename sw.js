@@ -1,4 +1,4 @@
-// importScripts('/cache-polyfill.js');
+self.importScripts('data/games.js');
 
 
 self.addEventListener('install', function(e) {
@@ -6,12 +6,10 @@ self.addEventListener('install', function(e) {
    caches.open('airhorner').then(function(cache) {
      return cache.addAll([
        '/',
-       '/cw2.html',
-       '/cw2.html?homescreen=1',
+       '/cw2-app-pwa-rest-api-git/cw2.html',
+      //  '/cw2.html?homescreen=1',
        '/?homescreen=1',
-       '/styles/main.css',
-       '/scripts/main.min.js',
-       '/sounds/airhorn.mp3'
+
      ]);
    })
  );

@@ -14,7 +14,7 @@ var version = 'v1::';
 */
 var offlineFundamentals = [
   '/',
-  '/cw2-app-pwa-rest-api/index.js',
+  // '/cw2-app-pwa-rest-api/index.js',
   '/cw2-app-pwa-rest-api/cw2.html',
   '/cw2-app-pwa-rest-api/styles.css',
   '/cw2-app-pwa-rest-api/userModel.js',

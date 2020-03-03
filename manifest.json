@@ -4,17 +4,17 @@
     "description": "cw2 pwa  - afterschool activities",
     "icons": [
       {
-        "src": "/cw2-app-pwa-rest-api-git/favicon.ico",
+        "src": "/cw2-app-pwa-rest-api/favicon.ico",
         "type": "image/ico",
         "sizes": "480x480"
-      },
-      {
-        "src": "/cw2-app-pwa-rest-api-git/images/icons512.png",
-        "type": "image/png",
-        "sizes": "500x500"
       }
+      // {
+      //   "src": "/cw2-app-pwa-rest-api/images/icons512.png",
+      //   "type": "image/png",
+      //   "sizes": "500x500"
+      // }
     ],
-    "start_url": "/cw2-app-pwa-rest-api-git/sw.js",
+    "start_url": "/cw2-app-pwa-rest-api/cw2.html",
     "background_color": "#3367D6",
     "display": "standalone",
     "theme_color": "#3367D6"

@@ -1,54 +1,50 @@
-'use strict';
-"use strict";
+
 
 console.log('WORKER: executing.');
 
 /* A version number is useful when updating the worker logic,
    allowing you to remove outdated cache entries during the update.
 */
-var version = 'v1::';
+var version = 'v5::';
 
 /* These resources will be downloaded and cached by the service worker
    during the installation process. If any resource fails to be downloaded,
    then the service worker won't be installed either.
 */
 var offlineFundamentals = [
-  //  '/cw2-app-pwa-rest-api/',
-   '/cw2-app-pwa-rest-api/index.js',
-  '/cw2-app-pwa-rest-api/styles.css',
-  '/cw2-app-pwa-rest-api/userModel.js',
-  '/cw2-app-pwa-rest-api/userController.js',
-  '/cw2-app-pwa-rest-api/server.js',
-  '/cw2-app-pwa-rest-api/reviewModel.js',
-  '/cw2-app-pwa-rest-api/reviewController.js',
-  '/cw2-app-pwa-rest-api/package.json',
-  '/cw2-app-pwa-rest-api/manifest.webmanifest',
-  '/cw2-app-pwa-rest-api/favicon.ico',
-  '/cw2-app-pwa-rest-api/courseModel.js',
-  '/cw2-app-pwa-rest-api/courseController.js',
-  '/cw2-app-pwa-rest-api/routes/api-routes.js',
-  '/cw2-app-pwa-rest-api/images/activity1.jpeg',
-  '/cw2-app-pwa-rest-api/images/activity2.jfif',
-  '/cw2-app-pwa-rest-api/images/activity3.png',
-  '/cw2-app-pwa-rest-api/images/background.jfif',
-  '/cw2-app-pwa-rest-api/images/computing.jpg',
-  '/cw2-app-pwa-rest-api/images/cooking.jpg',
-  '/cw2-app-pwa-rest-api/images/dance.jpg',
-  '/cw2-app-pwa-rest-api/images/english.jpg',
-  '/cw2-app-pwa-rest-api/images/favicon.ico',
-  '/cw2-app-pwa-rest-api/images/icon.png',
-  '/cw2-app-pwa-rest-api/images/icon256.png',
-  '/cw2-app-pwa-rest-api/images/icons512.png',
-  '/cw2-app-pwa-rest-api/images/login.png',
-  '/cw2-app-pwa-rest-api/images/logo.png',
-  '/cw2-app-pwa-rest-api/images/maths3.jfif',
-  '/cw2-app-pwa-rest-api/images/music.jpg',
-  '/cw2-app-pwa-rest-api/images/other.jfif',
-  '/cw2-app-pwa-rest-api/images/register.png',
-  '/cw2-app-pwa-rest-api/images/science.jpg',
-  '/cw2-app-pwa-rest-api/cw2.html',
-
-
+   '/index.js',
+  '/styles.css',
+  '/userModel.js',
+  '/userController.js',
+  '/server.js',
+  'reviewModel.js',
+  '/reviewController.js',
+  '/package.json',
+  '/manifest.json',
+  '/favicon.ico',
+  '/courseModel.js',
+  '/courseConttroler.js',
+  '/api-routes.js',
+  '/images/activity1.jpeg',
+  '/images/activity2.jfif',
+  '/images/activity3.png',
+  '/images/background.jfif',
+  '/images/computing.jpg',
+  '/images/cooking.jpg',
+  '/images/dance.jpg',
+  '/images/english.jpg',
+  '/images/favicon.ico',
+  '/images/icon.png',
+  '/images/icon256.png',
+  '/images/icons512.png',
+  '/images/login.jpg',
+  '/images/logo.png',
+  '/images/maths3.jfif',
+  '/images/music.jpg',
+  '/images/other.jfif',
+  '/images/register.png',
+  '/images/science.jpg',
+  '/cw2.html'
 ];
 
 /* The install event fires when the service worker is first installed.
@@ -230,6 +226,11 @@ self.addEventListener("activate", function(event) {
       })
   );
 });
+
+
+
+
+
 
 
 

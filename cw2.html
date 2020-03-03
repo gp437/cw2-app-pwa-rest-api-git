@@ -5,29 +5,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon" href="/cw2-app-pwa-rest-api-git/favicon.ico">
+  <link rel="shortcut icon" href="/images/favicon.ico">
   <meta name="theme-color" content="#B12A34">
   <title>cw2</title>
-  <link rel="manifest" href="/cw2-app-pwa-rest-api-git/manifest.json">
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body background="images/background.jfif">
 
   <!-- service worker -->
-<script>
-  if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js', { scope: '/cw2-app-pwa-rest-api-git/sw.js' }).then(function(registration) {
-      // ('sw.js', { scope: '/' }).then(function(reg) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}
-</script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js', { scope: 'sw.js' }).then(function (registration) {
+          // ('sw.js', { scope: '/' }).then(function(reg) {
+          // Registration was successful
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err);
+        });
+        // self.addEventListener('install', (e) => {
+        //   console.log('[Service Worker] Install');
+        // });
+        self.addEventListener('install', function (event) {
+          event.waitUntil(
+            caches.open(cacheName).then(function (cache) {
+              return cache.addAll(
+                [
+                  '/cw2.html',
+                  '/index.html',
+                  '/index.js',
+                  '/styles.css',
+                  '/manifest.json',
+                  '/favicon.ico',
+                  '/images/activity1.jpeg',
+                  '/images/activity2.jfif',
+                  '/images/activity3.png',
+                  '/images/background.jfif',
+                  '/images/computing.jpg',
+                  '/images/cooking.jpg',
+                  '/images/dance.jpg',
+                  '/images/english.jpg',
+                  '/images/favicon.ico',
+                  '/images/icon.png',
+                  '/images/icon256.png',
+                  '/images/icons512.png',
+                  '/images/login.jpg',
+                  '/images/logo.png',
+                  '/images/maths3.jfif',
+                  '/images/music.jpg',
+                  '/images/other.jfif',
+                  '/images/register.png',
+                  '/images/science.jpg',
+                ]
+              );
+            })
+          );
+          alert("Cached files\nAll files cached");
+        });
+      });
+    }
+
+  </script>
 
   <style>
     .images {
@@ -72,6 +112,15 @@
             </li>
           </ul>
 
+        </div>
+        <div v-for="review in allReviews" style="width: 200pt; border: 2px solid rgb(0, 0, 0)">
+          <ul>
+            <li>ID: {{review._id}} </li>
+            <li>Review for: {{review.reviewFor}} </li>
+            <li>Rate: {{review.data}} </li>
+            <li>Comments: {{review.Comments}} </li>
+            <li>Provider: {{review.provider}} </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -127,6 +176,8 @@
 // end of register functions
   </script>
 
+
+
   <!-- new course form -->
   <form class="form" id="myForm2" enctype="multipart/form-data">
     <h3>Add new activity/course</h3>
@@ -138,6 +189,8 @@
     <input type="text" name="price" id="price">
     <label for="location">location</label>
     <input type="location" name="location" id="location">
+    <label for="provider">provider</label>
+    <input type="text" name="provider" id="provider">
     <button type="submit" value="activity">Add activity</button>
   </form>
   <!-- end of new course form -->
@@ -168,12 +221,57 @@
   </script>
 
 
+
+  <!-- new review form -->
+  <form class="form" id="myForm3" enctype="multipart/form-data">
+    <h3>Add new review</h3>
+    <label for="reviewFor">Review for</label>
+    <input type="text" name="reviewFor" id="reviewFor">
+    <label for="data">Rate</label>
+    <input type="text" name="data" id="data">
+    <label for="comments">Comments</label>
+    <input type="text" name="comments" id="comments">
+    <label for="provider">Provider</label>
+    <input type="text" name="provider" id="provider">
+    <button type="submit" value="review">Add review</button>
+  </form>
+  <!-- end of new course form -->
+  <script>
+    // start of new course functions
+    let myForm3 = document.getElementById('myForm3');
+    myForm3.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData3 = new FormData(this);
+
+      const searchParams3 = new URLSearchParams();
+      for (const pair of formData3) {
+        searchParams3.append(pair[0], pair[1]);
+      }
+      fetch('http://localhost:8080/api/review', {
+        method: 'post', //  'PUT'
+        body: searchParams3
+      }).then(function (response) {
+        return response.text();
+      }).then(function (text) {
+        console.log(text);
+      }).catch(function (error) {
+        console.error(error)
+      })
+    });
+  // end of new review
+  </script>
+
+
+
+
   <script>
     let vm = new Vue({
       el: '#app',
       data() {
         return {
           allCourses: [],
+          allReviews: [],
           image: "images/english.jpg",
           image2: "images/maths3.jfif",
           image3: "images/dance.jpg",
@@ -195,22 +293,26 @@
             this.allCourses = data.data;
             console.log(data);
           });
+        fetch('http://localhost:8080/api/review')
+          .then(response => response.json())
+          .then(data => {
+            this.allReviews = data.data;
+            console.log(data);
+          });
       }
       // end of get courses
     })
 
   </script>
 
-
-
-
-
   <!-- show login div user details -->
+  <h4>Log in</h4>
   <div id="app2">
-    <input type="text" name="Myemail" id="Myemail" value ="">
-    <button v-on:click="logCheck">Login iiiiii</button>
-    
-    <h4>My info</h4>
+    <input type="text" v-bind="Myemail">
+    <input type="text" name="Mypassword" id="Mypassword">
+    <button v-on:click="logCheck">Login</button>
+
+
     <div style="display: flex; position: relative; justify-content: space-between; overflow:auto;">
       <div v-for="users in allUsers" style="width: 200pt; border: 2px solid rgb(0, 0, 0)">
         <ul>
@@ -228,35 +330,154 @@
 
 
   <script>
-    const email2 =  document.getElementById("Myemail").innerHTML ;
 
     // login vue get email api
     let vm2 = new Vue({
       el: '#app2',
 
-      data() {
-        return {
-          allUsers: []
-        }
+      data: {
+
+        allUsers: [],
+        Myemail: ''
+
       },
+
       methods: {
-        logCheck : function () {
-          fetch("http://localhost:8080/api/User/email/" + email2)
+        logCheck: function (Myemail) {
+          fetch("http://localhost:8080/api/User/email/" + Myemail)
             .then(response => response.json())
             .then(data => {
               this.allUsers = data.data;
               console.log(data);
-              console.log(("http://localhost:8080/api/User/email/" + email2))
-              console.log(email2)
+              console.log("this is the email " + { Myemail });
+            });
+          console.log("http://localhost:8080/api/User/email/" + Myemail)
 
-             });
-            console.log("http://localhost:8080/api/User/email/" + email2)
-          
 
         }
       }
     })
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div id="phoneImg" class="phone" style="display: none">
+  <img src="images/english.jpg" alt="" srcset="">
+  <img src="images/maths3.jfif" alt="" srcset="">
+  <img src="images/dance.jpg" alt="" srcset="">
+  <img src="images/music.jpg" alt="" srcset="">
+  <img src="images/activity2.jfif" alt="" srcset="">
+  <img src="images/activity1.jpeg" alt="" srcset="">
+  <img src="images/activity3.png" alt="" srcset="">
+  <img src="images/cooking.jpg" alt="" srcset="">
+  <img src="images/computing.jpg" alt="" srcset="">
+  <img src="images/science.jpg" alt="" srcset="">
+  <img src="images/other.jfif" alt="" srcset="">
+</div>
+
+<script>
+  function show () {
+    
+    var x =  screen.width ;
+    if (x > 500){
+      document.getElementById("phoneImg").style.display = "block";
+    }
+  }
+  show();
+  </script> -->
+
+
+
+
+
+  <!-- cache -->
+  <!-- '/cw2.html',
+          '/index.html',
+          '/index.js',
+          '/styles.css',
+          '/userModel.js',
+          '/userController.js',
+          '/server.js',
+          '/reviewModel.js',
+          '/reviewController.js',
+          '/cw2-app-pwa-rest-api/package.json',
+  '/manifest.json',
+  '/favicon.ico',
+  '/courseModel.js',
+  '/courseConttroler.js',
+  '/api-routes.js',
+  '/images/activity1.jpeg',
+  '/images/activity2.jfif',
+  '/images/activity3.png',
+  '/images/background.jfif',
+  '/images/computing.jpg',
+  '/images/cooking.jpg',
+  '/images/dance.jpg',
+  '/images/english.jpg',
+  '/images/favicon.ico',
+  '/images/icon.png',
+  '/images/icon256.png',
+  '/images/icons512.png',
+  '/images/login.jpg',
+  '/images/logo.png',
+  '/images/maths3.jfif',
+  '/images/music.jpg',
+  '/images/other.jfif',
+  '/images/register.png',
+  '/images/science.jpg', -->
+
+
+
+  <style>
+    .alert {
+      padding: 20px;
+      background-color: #f44336;
+      color: white;
+    }
+    
+    .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    .closebtn:hover {
+      color: black;
+    }
+    </style>
+    </head>
+    <body>
+    
+
+    
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong>Notification</strong> All data is cached.
+    </div>
 
 </body>
 
